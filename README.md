@@ -29,4 +29,4 @@ L'écran d'accueil contient :
 ## 👨‍💻 Projet
 **TP01 : Création de l'interface d'accueil — PrésenceManager**
 
-Version : 1.0
+
