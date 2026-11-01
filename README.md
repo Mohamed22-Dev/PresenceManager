@@ -1,4 +1,3 @@
-![Surface de PresenceManager (PresenceManager)](screen.png)
 # PrésenceManager 📱
 
 ## 📌 Description
@@ -25,7 +24,7 @@ L'écran d'accueil contient :
 
 ## 📸 Capture d'écran
 
-![Interface d'accueil de PrésenceManager](screenshots/presence-manager.png)
+![Surface de PresenceManager (PresenceManager)](screen.png)
 
 ## 👨‍💻 Projet
 **TP01 : Création de l'interface d'accueil — PrésenceManager**
