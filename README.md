@@ -68,15 +68,33 @@ Ce projet s'inscrit dans le cadre des Travaux Pratiques (**TP01**, **TP02** et *
 
 ---
 
-## 📸 Captures d'écran du Projet (TP03)
+## 📸 Galerie Complète des Captures d'Écran du Projet
 
-| 1. Tableau de Bord (`DashboardActivity`) | 2. Page de Destination (Clic Simple) |
-| :---: | :---: |
-| ![Tableau de bord](screenshots/dashboard.png) | ![Page Destination](screenshots/groupes.png) |
+### 🏠 1. Écran d'accueil & Tableau de bord
 
-| 3. Dialogue Double-clic (`imgProfil`) | 4. Dialogue Développeur (`Version 1.0`) |
+| Écran d'accueil (`MainActivity`) | Tableau de bord (`DashboardActivity`) |
 | :---: | :---: |
-| ![A propos](screenshots/dialogue_apropos.png) | ![Infos Développeur](screenshots/dialogue_developpeur.png) |
+| ![Accueil](screenshots/accueil.png) | ![Tableau de bord](screenshots/dashboard.png) |
+
+---
+
+### 📂 2. Écrans de destination (Navigation clic simple)
+
+| Page Groupes (`GroupesActivity`) | Page Faire l'appel (`AppelActivity`) |
+| :---: | :---: |
+| ![Groupes](screenshots/groupes.png) | ![Appel](screenshots/appel.png) |
+
+| Page Historique (`HistoriqueActivity`) | Page Statistiques (`StatistiquesActivity`) |
+| :---: | :---: |
+| ![Historique](screenshots/historique.png) | ![Statistiques](screenshots/statistiques.png) |
+
+---
+
+### 💬 3. Boîtes de Dialogue (Dialogues & Modals)
+
+| Dialogue "À propos" (Double-clic `imgProfil`) | Dialogue "Informations Développeur" (`Version 1.0`) |
+| :---: | :---: |
+| ![A propos](screenshots/dialogue_apropos.png) | ![Infos Developpeur](screenshots/dialogue_developpeur.png) |
 
 ---
 
