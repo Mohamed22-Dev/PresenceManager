@@ -74,7 +74,7 @@ Ce projet s'inscrit dans le cadre des Travaux Pratiques (**TP01**, **TP02** et *
 
 | Écran d'accueil (`MainActivity`) | Tableau de bord (`DashboardActivity`) |
 | :---: | :---: |
-| ![Accueil](screenshots/accueil_v2.png) | ![Tableau de bord](screenshots/dashboard_v2.png) |
+| ![Accueil](screenshots/accueil_v2.png) | ![Tableau de bord](screenshots/dashboard_v3.png) |
 
 ---
 
@@ -94,7 +94,7 @@ Ce projet s'inscrit dans le cadre des Travaux Pratiques (**TP01**, **TP02** et *
 
 | Dialogue "À propos" (Double-clic `imgProfil`) | Dialogue "Informations Développeur" (`Version 1.0`) |
 | :---: | :---: |
-| ![A propos](screenshots/dialogue_apropos_v2.png) | ![Infos Developpeur](screenshots/dialogue_developpeur_v2.png) |
+| ![A propos](screenshots/dialogue_apropos_v3.png) | ![Infos Developpeur](screenshots/dialogue_developpeur_v3.png) |
 
 ---
 
