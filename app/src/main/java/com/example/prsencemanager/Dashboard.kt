@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.view.GestureDetector
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -87,6 +90,47 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.txtFooterDashboard).setOnClickListener {
             afficherInfosDeveloppeur()
         }
+
+        // 5. Barre d'options contextuelle (ActionMode avec R.menu.contextual_menu)
+        var actionMode: ActionMode? = null
+
+        startSupportActionMode(object : ActionMode.Callback {
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                mode?.title = "Sélection"
+                menuInflater.inflate(R.menu.contextual_menu, menu)
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                return when (item?.itemId) {
+                    R.id.action_info -> {
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "Information sélectionnée",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        mode?.finish()
+                        true
+                    }
+                    R.id.action_annuler -> {
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "Action annulée",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        mode?.finish()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                actionMode = null
+            }
+        })
     }
 
     // Méthode d'affichage des infos développeur (Étape 8)
