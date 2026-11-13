@@ -1,34 +1,76 @@
 package com.example.prsencemanager
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
 import android.view.GestureDetector
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 
 class DashboardActivity : AppCompatActivity() {
+
+    // Étape 4 (TP04) : Déclaration de actionMode et du callback cabCallback
+    private var actionMode: ActionMode? = null
+
+    private val cabCallback = object : ActionMode.Callback {
+
+        override fun onCreateActionMode(
+            mode: ActionMode, menu: Menu
+        ): Boolean {
+            mode.menuInflater.inflate(R.menu.menu_cab_dashboard, menu)
+            mode.title = "Actions contextuelles"
+            return true
+        }
+
+        override fun onPrepareActionMode(
+            mode: ActionMode, menu: Menu
+        ): Boolean = false
+
+        override fun onActionItemClicked(
+            mode: ActionMode, item: MenuItem
+        ): Boolean = when (item.itemId) {
+            R.id.action_afficher -> {
+                AlertDialog.Builder(this@DashboardActivity)
+                    .setTitle("CAB")
+                    .setMessage("Action Afficher exécutée.")
+                    .setPositiveButton("OK", null)
+                    .show()
+                true
+            }
+            R.id.action_terminer -> {
+                mode.finish()
+                true
+            }
+            else -> false
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            actionMode = null
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        // Récupération des cartes (Étape 5)
+        // Récupération des cartes (Étape 5 - TP03)
         val cardGroupes = findViewById<View>(R.id.cardGroupes)
         val cardAppel = findViewById<View>(R.id.cardAppel)
         val cardHistorique = findViewById<View>(R.id.cardHistorique)
         val cardStatistiques = findViewById<View>(R.id.cardStatistiques)
 
-        // 1. Clic simple sur chaque carte (Étape 5)
+        // 1. Clic simple sur chaque carte
         cardGroupes.setOnClickListener {
             startActivity(Intent(this, GroupesActivity::class.java))
         }
@@ -45,7 +87,7 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, StatistiquesActivity::class.java))
         }
 
-        // 2. Appui long sur cardGroupes et cardAppel (Étape 6)
+        // 2. Appui long sur cardGroupes et cardAppel
         cardGroupes.setOnLongClickListener {
             Toast.makeText(
                 this,
@@ -64,7 +106,7 @@ class DashboardActivity : AppCompatActivity() {
             true
         }
 
-        // 3. Double-clic sur l'icône du profil imgProfil (Étape 7)
+        // 3. Double-clic sur l'icône du profil imgProfil
         val imgProfil = findViewById<ImageView>(R.id.imgProfil)
         val detecteur = GestureDetector(
             this,
@@ -86,54 +128,54 @@ class DashboardActivity : AppCompatActivity() {
             true
         }
 
-        // 4. Clic simple sur le texte de version (Étape 8)
+        // 4. Clic simple sur le texte de version
         findViewById<TextView>(R.id.txtFooterDashboard).setOnClickListener {
             afficherInfosDeveloppeur()
         }
 
-        // 5. Barre d'options contextuelle (ActionMode avec R.menu.contextual_menu)
-        var actionMode: ActionMode? = null
-
-        startSupportActionMode(object : ActionMode.Callback {
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                mode?.title = "Sélection"
-                menuInflater.inflate(R.menu.contextual_menu, menu)
-                return true
+        // Étape 4 (TP04) : Programmation du bouton CAB
+        val btnCab = findViewById<Button>(R.id.btnCab)
+        btnCab.setOnClickListener {
+            if (actionMode == null) {
+                actionMode = startSupportActionMode(cabCallback)
             }
+        }
 
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = false
+        // Étape 6 (TP04) : Programmation du bouton Pop-up
+        val btnPopup = findViewById<Button>(R.id.btnPopup)
+        btnPopup.setOnClickListener {
+            val popupMenu = PopupMenu(this, btnPopup)
 
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                return when (item?.itemId) {
-                    R.id.action_info -> {
-                        Toast.makeText(
-                            this@DashboardActivity,
-                            "Information sélectionnée",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        mode?.finish()
+            popupMenu.menuInflater.inflate(
+                R.menu.menu_popup_dashboard, popupMenu.menu
+            )
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_ouvrir_groupes -> {
+                        startActivity(
+                            Intent(this, GroupesActivity::class.java)
+                        )
                         true
                     }
-                    R.id.action_annuler -> {
-                        Toast.makeText(
-                            this@DashboardActivity,
-                            "Action annulée",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        mode?.finish()
+                    R.id.action_informations -> {
+                        AlertDialog.Builder(this)
+                            .setTitle("PrésenceManager")
+                            .setMessage(
+                                "Menu contextuel flottant du tableau de bord."
+                            )
+                            .setPositiveButton("OK", null)
+                            .show()
                         true
                     }
                     else -> false
                 }
             }
-
-            override fun onDestroyActionMode(mode: ActionMode?) {
-                actionMode = null
-            }
-        })
+            popupMenu.show()
+        }
     }
 
-    // Méthode d'affichage des infos développeur (Étape 8)
+    // Méthode d'affichage des infos développeur
     private fun afficherInfosDeveloppeur() {
         val dialogue = AlertDialog.Builder(this)
             .setTitle("Informations du développeur")

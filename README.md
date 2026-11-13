@@ -3,103 +3,65 @@
 ## 📌 Description du Projet
 **PrésenceManager** est une application mobile Android native conçue pour faciliter la gestion de la présence des stagiaires au sein des établissements de formation. 
 
-Ce projet s'inscrit dans le cadre des Travaux Pratiques (**TP01**, **TP02** et **TP03**) du module **M203 — Développement d'Applications Mobiles** (Filière Développement Digital).
+Ce projet regroupe l'ensemble des Travaux Pratiques (**TP01**, **TP02**, **TP03** et **TP04**) du module **M205 — Développer des interfaces utilisateurs sous Android** (Filière Développement Digital).
+
+---
+
+## 🎯 Objectifs du TP04 — Actions contextuelles (CAB & Pop-up)
+Implémentation et gestion des menus contextuels en Kotlin :
+1. **Barre d’actions contextuelle (CAB - Contextual Action Bar)** :
+   - Déclenchée par le bouton **CAB** (`#2563EB`).
+   - Utilise un `ActionMode.Callback` avec le menu XML `menu_cab_dashboard.xml`.
+   - Action *"Afficher"* : Exécute une boîte de dialogue `AlertDialog`.
+   - Action *"Terminer"* : Ferme la barre contextuelle (`mode.finish()`).
+2. **Menu flottant (Pop-up Menu)** :
+   - Déclenché par le bouton **Pop-up** (`#0F766E`).
+   - Ancré sur le bouton avec `PopupMenu` et le menu XML `menu_popup_dashboard.xml`.
+   - Action *"Ouvrir Groupes"* : Navigue vers `GroupesActivity`.
+   - Action *"Informations"* : Affiche une boîte de dialogue `AlertDialog`.
 
 ---
 
 ## 🛠️ Langages, Outils et Technologies Utilisés
 
 ### 🔤 1. Langages de Programmation
-* **Kotlin** : Langage principal utilisé pour programmer toute la logique applicative, la gestion des activités, la navigation et les écouteurs d'événements.
-* **XML (Extensible Markup Language)** : Langage de balisage utilisé pour structurer les interfaces utilisateur (Layouts), définir les styles, couleurs et drawables.
-* **Markdown** : Langage de rédaction pour la documentation du projet (`README.md`).
+* **Kotlin** : Logique applicative, gestion des activités, listeners et callbacks `ActionMode.Callback`.
+* **XML (Extensible Markup Language)** : Layouts des vues et définitions des ressources de menu (`res/menu/`).
+* **Markdown** : Documentation complète du projet (`README.md`).
 
 ### 🧰 2. Environnement et Outils de Développement
-* **Android Studio** : Environnement de développement intégré (IDE) officiel pour Android.
-* **Gradle** : Moteur d'automatisation de génération (Build Automation Tool) de l'application Android.
-* **Git & GitHub** : Système de contrôle de version distribué pour le suivi des modifications et le stockage distant du dépôt.
-* **Android SDK & ADB** : Ensemble d'outils et d'API pour le débogage et le déploiement sur émulateur.
+* **Android Studio** : IDE officiel Android.
+* **Gradle** : System Automation Build.
+* **Git & GitHub** : Gestion de version et hébergement du dépôt.
 
 ### ⚙️ 3. Composants et APIs Android Framework
-* **`AppCompatActivity`** : Classe de base pour les activités garantissant la compatibilité avec les versions antérieures d'Android.
-* **`Intent` (Explicite)** : Objet de messagerie utilisé pour naviguer de façon explicite entre les différentes activités (`MainActivity` ➔ `DashboardActivity` ➔ Écrans de destination).
-* **`OnClickListener`** : Écouteur d'événements gérant les clics simples sur les boutons, cartes et éléments textuels.
-* **`OnLongClickListener`** : Écouteur gérant les appuis maintenus (long click) avec retour booléen (`true`) pour consommer l'événement sans déclencher le clic simple.
-* **`GestureDetector` & `SimpleOnGestureListener`** : Composant de détection des gestes avancés permettant d'intercepter spécifiquement le **double-clic (`onDoubleTap`)**.
-* **`AlertDialog.Builder`** : Composant pour construire et afficher des boîtes de dialogue pop-up interactives ("À propos" et "Informations du développeur").
-* **`Toast`** : Notification éphémère affichant des messages courts d'information à l'écran.
-* **`Linkify` & `LinkMovementMethod`** : API permettant de détecter automatiquement les URLs dans un texte (`Linkify.WEB_URLS`) et d'ouvrir le navigateur web lors d'un clic.
-* **Layouts XML (`ConstraintLayout`, `GridLayout`, `LinearLayout`, `CardView`)** : Structures de mise en page réactives et ergonomiques.
+* **`ActionMode` & `ActionMode.Callback`** : Gestion du cycle de vie de la CAB.
+* **`PopupMenu`** : Affichage d'un menu flottant contextuel ancré à une vue.
+* **`Intent` (Explicite)** : Navigation vers `GroupesActivity`.
+* **`AlertDialog.Builder`** : Affichage des fenêtres d'information.
+* **Layouts XML** : `ConstraintLayout`, `LinearLayout` horizontal pour les boutons de commande.
 
 ---
 
-## 📱 Description Détaillée des Écrans et Fonctionnalités
+## 📱 Description Détaillée des Écrans et TP04
 
-### 1️⃣ Écran d'accueil (`MainActivity`)
-* **Fonction** : Point d'entrée de l'application (TP01).
-* **Composants** : Logo `PrésenceManager`, Titre principal, Description, Bouton `Commencer l'appel`, Pied de page.
-* **Interactions & Événements** :
-  * **Clic simple sur `btnCommencer`** : Déclenche un `Intent` explicite pour ouvrir le Tableau de bord (`DashboardActivity`).
-  * **Clic simple sur `txtFooter` ("PrésenceManager - Version 1.0")** : Affiche la boîte de dialogue *"Informations du développeur"*.
-
-### 2️⃣ Tableau de Bord (`DashboardActivity`)
-* **Fonction** : Écran central de navigation (TP02 & TP03).
-* **Composants** : En-tête avec nom de l'application et photo de profil (`imgProfil`), Message de bienvenue, Grille 2x2 de 4 cartes interactives, Pied de page.
-* **Interactions & Événements** :
-  * **Clics simples (`OnClickListener`) sur les cartes** :
-    * `cardGroupes` ➔ Ouvre `GroupesActivity`.
-    * `cardAppel` ➔ Ouvre `AppelActivity`.
-    * `cardHistorique` ➔ Ouvre `HistoriqueActivity`.
-    * `cardStatistiques` ➔ Ouvre `StatistiquesActivity`.
-  * **Appui long (`OnLongClickListener`) sur les cartes** :
-    * `cardGroupes` ➔ Affiche un message Toast : *"Groupes : sélectionner ou consulter les groupes"*.
-    * `cardAppel` ➔ Affiche un message Toast : *"Faire l'appel : démarrer une séance"*.
-  * **Double-clic (`onDoubleTap`) sur la photo de profil (`imgProfil`)** :
-    * Utilise un `GestureDetector` pour détecter deux clics rapides et ouvrir la boîte de dialogue *"À propos de PrésenceManager"*.
-  * **Clic simple sur `txtFooterDashboard`** : Affiche la boîte de dialogue *"Informations du développeur"*.
-
-### 3️⃣ Écrans de Destination (`GroupesActivity`, `AppelActivity`, `HistoriqueActivity`, `StatistiquesActivity`)
-* **Fonction** : Écrans cibles de chaque fonctionnalité du tableau de bord.
-* **Présentation** : Fond d'écran `#F8FAFC`, titre centré `#1E3A5F` en 24sp gras et message *"Fonctionnalité en cours de développement"* en 16sp.
-
-### 4️⃣ Boîtes de Dialogue Pop-Up (AlertDialog)
-* **Boîte de dialogue "À propos"** : Titre *"À propos de PrésenceManager"*, Message *"Application de gestion des présences — Version 1.0"*, Bouton OK.
-* **Boîte de dialogue "Informations du développeur"** : Affiche le nom du développeur (*Mohamed el HAIRCHE*), la version et un lien URL vers le dépôt GitHub cliquable directement.
+### 1️⃣ Tableau de Bord avec boutons CAB & Pop-up (`DashboardActivity`)
+Le tableau de bord intègre deux boutons d'action sous la grille des cartes :
+- **Bouton CAB** (`btnCab`) : Active la Contextual Action Bar en haut de l'écran.
+- **Bouton Pop-up** (`btnPopup`) : Affiche le menu contextuel flottant.
 
 ---
 
-## 📸 Galerie Complète des Captures d'Écran du Projet
+## 📸 Captures d'Écran du TP04
 
-### 🏠 1. Écran d'accueil & Tableau de bord
-
-| Écran d'accueil (`MainActivity`) | Tableau de bord (`DashboardActivity`) |
+| 1. Barre d'actions contextuelle (CAB) | 2. Menu flottant (Pop-up Menu) |
 | :---: | :---: |
-| ![Accueil](screenshots/accueil_v2.png) | ![Tableau de bord](screenshots/dashboard_v4.png) |
-
----
-
-### 📂 2. Écrans de destination (Navigation clic simple)
-
-| Page Groupes (`GroupesActivity`) | Page Faire l'appel (`AppelActivity`) |
-| :---: | :---: |
-| ![Groupes](screenshots/groupes_v2.png) | ![Appel](screenshots/appel_v2.png) |
-
-| Page Historique (`HistoriqueActivity`) | Page Statistiques (`StatistiquesActivity`) |
-| :---: | :---: |
-| ![Historique](screenshots/historique_v2.png) | ![Statistiques](screenshots/statistiques_v2.png) |
-
----
-
-### 💬 3. Boîtes de Dialogue (Dialogues & Modals)
-
-| Dialogue "À propos" (Double-clic `imgProfil`) | Dialogue "Informations Développeur" (`Version 1.0`) |
-| :---: | :---: |
-| ![A propos](screenshots/dialogue_apropos_v4.png) | ![Infos Developpeur](screenshots/dialogue_developpeur_v4.png) |
+| ![CAB Active](screenshots/tp04_cab_active.png) | ![Pop-up Menu Active](screenshots/tp04_popup_active.png) |
 
 ---
 
 ## 👨‍💻 Auteur & Informations
-* **Filière** : Développement Digital — Option Applications Mobiles
+* **Module** : M205 — Développer des interfaces utilisateurs sous Android
 * **Développeur** : Mohamed el HAIRCHE
 * **Version** : 1.0
 * **Dépôt GitHub** : [PresenceManager sur GitHub](https://github.com/Mohamed22-Dev/PresenceManager)
