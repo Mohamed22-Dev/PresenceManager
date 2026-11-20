@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
     android:background="#F8FAFC">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Header Bar -->
+    <RelativeLayout
+        android:id="@+id/headerGroupes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Groupes"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#1E3A5F"
-        android:gravity="center" />
+        android:background="#1E3A5F"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Fonctionnalité en cours de développement"
-        android:textSize="16sp"
-        android:textColor="#64748B"
-        android:gravity="center" />
+        <TextView
+            android:id="@+id/txtTitreGroupes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liste des Groupes"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/txtSousTitreGroupes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtTitreGroupes"
+            android:layout_marginTop="4dp"
+            android:text="Gestion et effectif des stagiaires"
+            android:textSize="14sp"
+            android:textColor="#CBD5E1"/>
+
+    </RelativeLayout>
+
+    <!-- ListView for Groups -->
+    <ListView
+        android:id="@+id/listGroupes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:divider="@null"
+        android:clipToPadding="false"/>
 
 </LinearLayout>
