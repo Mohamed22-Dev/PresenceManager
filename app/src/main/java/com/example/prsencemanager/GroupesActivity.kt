@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -28,8 +30,11 @@ class GroupesActivity : AppCompatActivity() {
         )
 
         val listView = findViewById<ListView>(R.id.listGroupes)
+        val btnArrayAdapter = findViewById<Button>(R.id.btnArrayAdapter)
+        val btnBaseAdapter = findViewById<Button>(R.id.btnBaseAdapter)
 
-        val adapter = object : BaseAdapter() {
+        // 1. BaseAdapter personnalisé
+        val customBaseAdapter = object : BaseAdapter() {
             override fun getCount(): Int = groupes.size
             override fun getItem(position: Int): Any = groupes[position]
             override fun getItemId(position: Int): Long = position.toLong()
@@ -49,7 +54,28 @@ class GroupesActivity : AppCompatActivity() {
             }
         }
 
-        listView.adapter = adapter
+        // 2. ArrayAdapter simple
+        val arrayAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_2,
+            android.R.id.text1,
+            groupes.map { "${it.nom}\n${it.effectif}" }
+        )
+
+        // Affichage par défaut avec BaseAdapter
+        listView.adapter = customBaseAdapter
+
+        // Clic sur le bouton Bleu (ArrayAdapter)
+        btnArrayAdapter.setOnClickListener {
+            listView.adapter = arrayAdapter
+            Toast.makeText(this, "Affichage activé avec : ArrayAdapter", Toast.LENGTH_SHORT).show()
+        }
+
+        // Clic sur le bouton Vert (BaseAdapter)
+        btnBaseAdapter.setOnClickListener {
+            listView.adapter = customBaseAdapter
+            Toast.makeText(this, "Affichage activé avec : BaseAdapter", Toast.LENGTH_SHORT).show()
+        }
 
         listView.setOnItemClickListener { _, _, position, _ ->
             val groupeSelectionne = groupes[position]
