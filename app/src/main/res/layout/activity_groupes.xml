@@ -1,64 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F8FAFC">
 
-    <!-- Header Bar -->
-    <RelativeLayout
-        android:id="@+id/headerGroupes"
+    <!-- En-tête -->
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:background="#1E3A5F"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="36dp"
-        android:paddingBottom="16dp">
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Liste des groupes"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtTitreGroupes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Liste des Groupes"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/txtSousTitreGroupes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtTitreGroupes"
-            android:layout_marginTop="4dp"
-            android:text="Gestion et effectif des stagiaires"
-            android:textSize="14sp"
-            android:textColor="#CBD5E1"/>
-
-    </RelativeLayout>
-
-    <!-- Buttons Bar: ArrayAdapter (Blue) & BaseAdapter (Green) -->
+    <!-- Barre de bascule entre les deux adaptateurs -->
     <LinearLayout
-        android:id="@+id/layoutAdapterButtons"
+        android:id="@+id/layoutChoixAdapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
         <Button
             android:id="@+id/btnArrayAdapter"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
             android:text="ArrayAdapter"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textAllCaps="false"
             android:textStyle="bold"
+            android:textColor="#FFFFFF"
             android:backgroundTint="#2563EB" />
 
         <Button
@@ -66,25 +46,21 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             android:text="BaseAdapter"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textAllCaps="false"
             android:textStyle="bold"
-            android:backgroundTint="#16A34A" />
-
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#0F766E" />
     </LinearLayout>
 
-    <!-- ListView for Groups -->
+    <!-- ListView recevant alternativement les deux adaptateurs -->
     <ListView
-        android:id="@+id/listGroupes"
+        android:id="@+id/lvGroupes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp"
-        android:divider="@null"
-        android:clipToPadding="false"/>
+        android:divider="#E2E8F0"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>
