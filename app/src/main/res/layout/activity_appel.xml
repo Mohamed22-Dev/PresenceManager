@@ -1,29 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
     android:background="#F8FAFC">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Top Header Bar -->
+    <RelativeLayout
+        android:id="@+id/headerAppel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Faire l'appel"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#1E3A5F"
-        android:gravity="center" />
+        android:background="#1E3A5F"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txtTitreAppel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appel — Séance 22 · DEVOAM202 · M203"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/txtDateAppel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtTitreAppel"
+            android:layout_marginTop="4dp"
+            android:text="mercredi 25 novembre 2026 · 16:00 – 18:30"
+            android:textSize="13sp"
+            android:textColor="#CBD5E1" />
+
+    </RelativeLayout>
+
+    <!-- Stats Bar: Badges (Présents / Absents) & Button (Tous présents) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Fonctionnalité en cours de développement"
-        android:textSize="16sp"
-        android:textColor="#64748B"
-        android:gravity="center" />
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true">
+
+            <!-- Badge Présents -->
+            <TextView
+                android:id="@+id/txtBadgePresents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Présents : 0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#16A34A"
+                android:background="@drawable/bg_present_selected"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Badge Absents -->
+            <TextView
+                android:id="@+id/txtBadgeAbsents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Absents : 0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#DC2626"
+                android:background="@drawable/bg_absent_selected"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp" />
+
+        </LinearLayout>
+
+        <!-- Button Tous présents -->
+        <TextView
+            android:id="@+id/btnTousPresents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="Tous présents"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#1E3A5F"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
+    <!-- Table Header: Stagiaire | Présence -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:background="#F8FAFC">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Stagiaire"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#64748B" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Présence"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#64748B" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E8F0" />
+
+    <!-- RecyclerView for Trainees List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStagiaires"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E8F0" />
+
+    <!-- Bottom Actions Bar: Annuler & Valider l'appel -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:background="#FFFFFF">
+
+        <Button
+            android:id="@+id/btnAnnulerAppel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Annuler"
+            android:textColor="#64748B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="12dp" />
+
+        <Button
+            android:id="@+id/btnValiderAppel"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Valider l'appel"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:backgroundTint="#0F172A" />
+
+    </LinearLayout>
 
 </LinearLayout>

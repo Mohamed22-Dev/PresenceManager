@@ -1,88 +1,94 @@
 package com.example.prsencemanager
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
-class GroupesActivity : AppCompatActivity() {
+data class GroupeItem(val nom: String, val effectif: String)
 
-    private lateinit var lvGroupes: ListView
+class GroupesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_groupes)
 
-        lvGroupes = findViewById(R.id.lvGroupes)
+        val groupes = listOf(
+            GroupeItem("DEVAM201", "28 Stagiaires — Développement Digital"),
+            GroupeItem("DEVAM202", "30 Stagiaires — Option Applications Mobiles"),
+            GroupeItem("DEVAM203", "25 Stagiaires — Option Applications Mobiles"),
+            GroupeItem("DEVAM204", "27 Stagiaires — Option Web Fullstack"),
+            GroupeItem("GE101", "32 Stagiaires — Gestion des Entreprises"),
+            GroupeItem("ID101", "26 Stagiaires — Infrastructure Digitale")
+        )
+
+        val listView = findViewById<ListView>(R.id.lvGroupes)
         val btnArrayAdapter = findViewById<Button>(R.id.btnArrayAdapter)
         val btnBaseAdapter = findViewById<Button>(R.id.btnBaseAdapter)
 
-        // Clic sur le bouton ArrayAdapter -> Appel de la méthode 1
-        btnArrayAdapter.setOnClickListener {
-            afficherAvecArrayAdapter()
+        // 1. BaseAdapter personnalisé
+        val customBaseAdapter = object : BaseAdapter() {
+            override fun getCount(): Int = groupes.size
+            override fun getItem(position: Int): Any = groupes[position]
+            override fun getItemId(position: Int): Long = position.toLong()
+
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+                val view = convertView ?: LayoutInflater.from(this@GroupesActivity)
+                    .inflate(R.layout.item_groupe, parent, false)
+
+                val groupe = groupes[position]
+                val txtNom = view.findViewById<TextView>(R.id.txtNomGroupe)
+                val txtInfo = view.findViewById<TextView>(R.id.txtEffectif)
+
+                txtNom.text = groupe.nom
+                txtInfo.text = groupe.effectif
+
+                return view
+            }
         }
 
-        // Clic sur le bouton BaseAdapter -> Appel de la méthode 2
-        btnBaseAdapter.setOnClickListener {
-            afficherAvecBaseAdapter()
-        }
-
-        // Affichage initial par défaut avec BaseAdapter
-        afficherAvecBaseAdapter()
-    }
-
-    // MÉTHODE 1 : ARRAYADAPTER (Liste simple)
-    fun afficherAvecArrayAdapter() {
-        val groupes = arrayOf(
-            "DEVAM201", "DEVAM202", "DEVAM203",
-            "DEVAM204", "DEVAM205", "DEVAM206",
-            "DEVAM207", "DEVAM208", "DEVAM209", "DEVAM210"
-        )
-
-        val adapter = ArrayAdapter(
+        // 2. ArrayAdapter simple
+        val arrayAdapter = ArrayAdapter(
             this,
-            android.R.layout.simple_list_item_1,
-            groupes
+            android.R.layout.simple_list_item_2,
+            android.R.id.text1,
+            groupes.map { "${it.nom}\n${it.effectif}" }
         )
-        lvGroupes.adapter = adapter
 
-        lvGroupes.setOnItemClickListener { _, _, position, _ ->
-            Toast.makeText(
-                this,
-                groupes[position],
-                Toast.LENGTH_SHORT
-            ).show()
+        // Affichage par défaut avec BaseAdapter
+        listView.adapter = customBaseAdapter
+
+        // Clic sur le bouton Bleu (ArrayAdapter)
+        btnArrayAdapter.setOnClickListener {
+            listView.adapter = arrayAdapter
+            Toast.makeText(this, "Affichage activé avec : ArrayAdapter", Toast.LENGTH_SHORT).show()
         }
-    }
 
-    // MÉTHODE 2 : BASEADAPTER (Liste personnalisée avec ViewHolder)
-    fun afficherAvecBaseAdapter() {
-        val groupes = listOf(
-            Groupe("DEVAM201", 24),
-            Groupe("DEVAM202", 22),
-            Groupe("DEVAM203", 26),
-            Groupe("DEVAM204", 23),
-            Groupe("DEVAM205", 25),
-            Groupe("DEVAM206", 21),
-            Groupe("DEVAM207", 20),
-            Groupe("DEVAM208", 22),
-            Groupe("DEVAM209", 25),
-            Groupe("DEVAM210", 23)
-        )
+        // Clic sur le bouton Vert (BaseAdapter)
+        btnBaseAdapter.setOnClickListener {
+            listView.adapter = customBaseAdapter
+            Toast.makeText(this, "Affichage activé avec : BaseAdapter", Toast.LENGTH_SHORT).show()
+        }
 
-        val adapter = GroupeAdapter(this, groupes)
-        lvGroupes.adapter = adapter
-
-        lvGroupes.setOnItemClickListener { _, _, position, _ ->
-            val groupe = adapter.getItem(position)
-            AlertDialog.Builder(this)
-                .setTitle(groupe.nom)
-                .setMessage("Effectif : ${groupe.effectif} stagiaires")
-                .setPositiveButton("OK", null)
-                .show()
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val groupeSelectionne = groupes[position]
+            if (groupeSelectionne.nom.contains("202", ignoreCase = true)) {
+                startActivity(Intent(this, AppelActivity::class.java))
+            } else {
+                Toast.makeText(
+                    this,
+                    "Groupe ${groupeSelectionne.nom} sélectionné (${groupeSelectionne.effectif})",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }

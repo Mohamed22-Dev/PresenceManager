@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:background="#FFFFFF">
+
+    <!-- Nom du stagiaire -->
+    <TextView
+        android:id="@+id/txtNomStagiaire"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="ABKHICH ABDELBADIAE"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#334155" />
+
+    <!-- Container des boutons PRÉSENT / ABSENT -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_toggle_group"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/btnPresent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="PRÉSENT"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#16A34A"
+            android:background="@drawable/bg_present_selected" />
+
+        <TextView
+            android:id="@+id/btnAbsent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="ABSENT"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#94A3B8"
+            android:background="@drawable/bg_toggle_unselected" />
+
+    </LinearLayout>
+
+</LinearLayout>
